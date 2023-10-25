@@ -17,7 +17,6 @@ uniform struct Material
 	vec3 diffuse;
 	vec3 specular;
 	float shininess;
-	
 	vec2 offset;
 	vec2 tiling;
 } material;
