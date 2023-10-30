@@ -52,9 +52,9 @@ namespace nc
 	void CameraComponent::SetProgram(res_t<Program> program)
 	{
 		// set program uniform for "view" with view matrix
-		program->SetUniform("view", &view);
+		program->SetUniform("view", view);
 		// set program uniform for "projection" with projection matrix
-		program->SetUniform("projection", &view);
+		program->SetUniform("projection", projection);
 	}
 
 	void CameraComponent::ProcessGui()
