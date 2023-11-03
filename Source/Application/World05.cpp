@@ -21,7 +21,7 @@ namespace nc
             actor->transform.position = glm::vec3{ 3, 3, 3 };
             auto lightComponent = CREATE_CLASS(LightComponent);
             lightComponent->type = LightComponent::eType::Point;
-            lightComponent->color = glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
+            lightComponent->color = glm::vec3{ 1, 1, 1 }; //glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
             lightComponent->intensity = 1;
             lightComponent->range = 20;
             lightComponent->innerAngle = 10.0f;
@@ -67,6 +67,22 @@ namespace nc
 
         material->ProcessGui();
         material->Bind();
+
+        material = GET_RESOURCE(Material, "materials/refraction.mtrl");
+        if (material) 
+        {
+            ImGui::Begin("Refraction");
+
+            m_refraction = 1.0f + std::fabs(std::sin(m_time * 0.01f));
+
+            ImGui::DragFloat("IOR", &m_refraction, 0.01f, 1, 3);
+            auto program = material->GetProgram();
+            program->Use();
+            program->SetUniform("ior", m_refraction);
+
+            ImGui::End();
+        }
+
 
         m_time += dt;
 

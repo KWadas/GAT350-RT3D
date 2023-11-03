@@ -1,0 +1,12 @@
+{
+  "program": "shaders/refraction.prog",
+  "cubemap": "Vindelalven",
+  "cubemaps": [
+    "textures/Vindelalven/posx.jpg",
+    "textures/Vindelalven/negx.jpg",
+    "textures/Vindelalven/posy.jpg",
+    "textures/Vindelalven/negy.jpg",
+    "textures/Vindelalven/posz.jpg",
+    "textures/Vindelalven/negz.jpg"
+  ]
+}
