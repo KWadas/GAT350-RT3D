@@ -1,13 +1,12 @@
 #pragma once
 #include "Framework/World.h"
-#include <glm/glm/glm.hpp>
-#include "Core/Math/Vector2.h"
 #include "Renderer/Renderer.h"
+#include "Core/Math/Transform.h"
 #include <vector>
 
 namespace nc
 {
-	class World02 : public World
+	class World06 : public World
 	{
 	public:
 		bool Initialize() override;
@@ -16,11 +15,10 @@ namespace nc
 		void Draw(Renderer& renderer) override;
 
 	private:
-		float m_angle = 0;
 		float m_time;
-		glm::vec2 m_position;
-		std::vector<glm::vec2> m_positions;
+		float m_speed = 5;
 
-		GLuint m_vao;
+		float m_refraction{ 1 };
+		glm::vec3 m_ambientLight{ 0.2f };
 	};
 }

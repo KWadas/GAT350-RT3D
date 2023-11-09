@@ -37,21 +37,41 @@ namespace nc
 
 	void Engine::Update()
 	{
-		// update sdl events
-		SDL_Event event;
-		SDL_PollEvent(&event);
-		
-		GetSystem<Gui>()->ProcessEvent(event);
-
 		// update time
 		m_time.Tick();
 
-		// update systems
-		for (auto& system : m_systems)
-		{
-			system->Update();
-		}
+		// update sdl events
+		SDL_Event event;
 
-		m_quit = GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_ESCAPE);
+		while (SDL_PollEvent(&event)) {
+			GetSystem<Gui>()->ProcessEvent(event);
+
+			// update systems
+			for (auto& system : m_systems)
+			{
+				system->Update();
+			}
+
+			m_quit = GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_ESCAPE);
+		}
 	}
+	//void Engine::Update()
+	//{
+	//	// update sdl events
+	//	SDL_Event event;
+	//	SDL_PollEvent(&event);
+
+	//	GetSystem<Gui>()->ProcessEvent(event);
+
+	//	// update time
+	//	m_time.Tick();
+
+	//	// update systems
+	//	for (auto& system : m_systems)
+	//	{
+	//		system->Update();
+	//	}
+
+	//	m_quit = GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_ESCAPE);
+	//}
 }

@@ -34,7 +34,7 @@ namespace nc
 			camera = actor->GetComponent<CameraComponent>();
 			if (camera)
 			{
-				continue;
+				break;
 			}
 		}
 		
@@ -78,6 +78,9 @@ namespace nc
 		{
 			if (actor->active) actor->Draw(renderer);
 		}
+
+		//TREE PROBLEM: Things only render if the trees are made active afte the first frame -Christian
+		//for (auto& actor : m_actors) actor->active = true;
 	}
 
 	void Scene::Add(std::unique_ptr<Actor> actor)

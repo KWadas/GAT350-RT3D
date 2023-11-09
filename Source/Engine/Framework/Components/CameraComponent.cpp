@@ -13,7 +13,7 @@ namespace nc
 		{
 			// set aspect with renderer width / renderer height (make sure it is a floating point division)
 			// aspect = width / height;
-			aspect = ENGINE.GetSystem<Renderer>()->GetWidth() / ENGINE.GetSystem<Renderer>()->GetHeight();
+			aspect = ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight();
 		}
 
 		return true;
@@ -69,6 +69,7 @@ namespace nc
 	{
 		// READ_DATA of fov, aspect, near and far values
 		READ_DATA(value, fov);
+		READ_DATA(value, aspect);
 		READ_DATA(value, near);
 		READ_DATA(value, far);
 	}

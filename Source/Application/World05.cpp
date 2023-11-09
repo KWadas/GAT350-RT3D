@@ -15,33 +15,52 @@ namespace nc
         m_scene->Load("scenes/scene.json");
         m_scene->Initialize();
 
-        {
-            auto actor = CREATE_CLASS(Actor);
-            actor->name = "light1";
-            actor->transform.position = glm::vec3{ 3, 3, 3 };
-            auto lightComponent = CREATE_CLASS(LightComponent);
-            lightComponent->type = LightComponent::eType::Point;
-            lightComponent->color = glm::vec3{ 1, 1, 1 }; //glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
-            lightComponent->intensity = 1;
-            lightComponent->range = 20;
-            lightComponent->innerAngle = 10.0f;
-            lightComponent->outerAngle = 30.0f;
-            actor->AddComponent(std::move(lightComponent));
-            m_scene->Add(std::move(actor));
-        }
+        //{
+        //    auto actor = CREATE_CLASS(Actor);
+        //    actor->name = "light1";
+        //    actor->transform.position = glm::vec3{ 3, 3, 3 };
+        //    auto lightComponent = CREATE_CLASS(LightComponent);
+        //    lightComponent->type = LightComponent::eType::Point;
+        //    lightComponent->color = glm::vec3{ 1, 1, 1 }; //glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
+        //    lightComponent->intensity = 1;
+        //    lightComponent->range = 20;
+        //    lightComponent->innerAngle = 10.0f;
+        //    lightComponent->outerAngle = 30.0f;
+        //    actor->AddComponent(std::move(lightComponent));
+        //    m_scene->Add(std::move(actor));
+        //}
+
         {
             auto actor = CREATE_CLASS(Actor);
             actor->name = "camera1";
             actor->transform.position = glm::vec3{ 0, 3, 7 };
-            actor->transform.rotation = glm::vec3{ 0, 180, 0 };
+            actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
 
             auto cameraComponent = CREATE_CLASS(CameraComponent);
             cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
             actor->AddComponent(std::move(cameraComponent));
 
+            auto cameraController = CREATE_CLASS(CameraController);
+            cameraController->speed = 5;
+            cameraController->sensitivity = 0.5f;
+            cameraController->m_owner = actor.get();
+            cameraController->Initialize();
+            actor->AddComponent(std::move(cameraController));
+
             m_scene->Add(std::move(actor));
         }
-        
+
+        /*for (int i = 0; i < 0; i++)
+        {
+            auto actor = CREATE_CLASS_BASE(Actor, "tree");
+            actor->name = StringUtils::CreateUnique("tree");
+            actor->transform.position = glm::vec3{ randomf(-10, 10), 0, randomf(-10, 10) };
+            actor->transform.scale = glm::vec3{ random(0.5f, 3.0f), random(0.5f, 3.0f), 0 };
+            actor->active = true;
+            actor->Initialize();
+            m_scene->Add(std::move(actor));
+        }*/
+
         return true;
     }
 
@@ -58,12 +77,7 @@ namespace nc
 
         auto actor = m_scene->GetActorByName<Actor>("actor1");
 
-        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
-        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed * dt : 0;
-        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? m_speed * -dt : 0;
-        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? m_speed * dt : 0;
-
-        auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
+        auto material = actor->GetComponent<ModelComponent>()->material;
 
         material->ProcessGui();
         material->Bind();
@@ -82,7 +96,6 @@ namespace nc
 
             ImGui::End();
         }
-
 
         m_time += dt;
 
@@ -103,3 +116,32 @@ namespace nc
         renderer.EndFrame();
     }
 }
+
+/*
+        {
+            "type": "Actor",
+            "name": "camera1",
+            "persistent": true,
+            "active": true,
+            "transform": {
+                "position": [ 0, 3, 7 ],
+                "rotation": [ 0, 180, 0 ]
+            },
+            "components": [
+                {
+                    "type": "CameraComponent",
+                    "fov": 80.0,
+                    "aspect": 0,
+                    "near": 0.1,
+                    "far": 100
+                },
+                {
+                    "type": "CameraController",
+                    "sensitivity": 0.1,
+                    "speed": 0,
+                    "yaw": 0,
+                    "pitch": 0
+                }
+            ]
+        },
+*/

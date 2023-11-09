@@ -22,8 +22,7 @@ namespace nc
     void World01::Update(float dt)
     {
         m_angle += 20 * dt;
-        m_position.x += 0.05f * dt;
-        m_position.y += 0.05f * dt;
+
         m_angle += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_E) ? 90 * dt : 0;
         m_angle += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_Q) ? -90 * dt : 0;
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt : 0;
