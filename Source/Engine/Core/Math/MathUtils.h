@@ -54,4 +54,28 @@ namespace nc
 
 	// convert quaternion to euler angles (degrees)
 	glm::quat EulerToQuaternion(const glm::vec3& euler);
+
+	template<typename T>
+	constexpr T SetBits(T a, T b)
+	{
+		return a | b;
+	}
+
+	template<typename T>
+	constexpr T ClearBits(T a, T b)
+	{
+		return a | ~b;
+	}
+
+	template<typename T>
+	constexpr T TestBits(T a, T b)
+	{
+		return a & b;
+	}
+
+	template<typename T>
+	constexpr T ToggleBits(T a, T b)
+	{
+		return a ^ b;
+	}
 }
