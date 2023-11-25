@@ -1,4 +1,4 @@
-#include "World07.h"
+#include "World08.h"
 #include "Framework/Framework.h"
 #include "Input/InputSystem.h"
 
@@ -9,11 +9,14 @@
 
 namespace nc
 {
-    bool World07::Initialize()
+    bool World08::Initialize()
     {
         m_scene = std::make_unique<Scene>();
-        m_scene->Load("scenes/scene_shadow.json");
+        m_scene->Load("scenes/scene_editor.json");
+        m_scene->Load("scenes/cel.json");
         m_scene->Initialize();
+
+        m_editor = std::make_unique<Editor>();
 
         auto texture = std::make_shared<Texture>();
         texture->CreateDepthTexture(1024, 1024);
@@ -40,23 +43,36 @@ namespace nc
         return true;
     }
 
-    void World07::Shutdown()
+    void World08::Shutdown()
     {
     }
 
-    void World07::Update(float dt)
+    void World08::Update(float dt)
     {
         m_time += dt;
 
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         m_scene->Update(dt);
-        m_scene->ProcessGui();
+
+        m_editor->Update();
+        m_editor->ProcessGui(m_scene.get());
+
+        // CEL-SHADING
+        auto program = GET_RESOURCE(Program, "shaders/cel.prog");
+        if (program)program->Use();
+        program->SetUniform("levels", celLevel);
+
+        // CEL-SHADING GUI
+        ImGui::Begin("Cel-Shading");
+        ImGui::DragInt("Levels", &celLevel, 1, 1, 25);
+        ImGui::End();
+
 
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
 
-    void World07::Draw(Renderer& renderer)
+    void World08::Draw(Renderer& renderer)
     {
         // *** PASS 1 *** //
         auto framebuffer = GET_RESOURCE(Framebuffer, "depth_buffer");

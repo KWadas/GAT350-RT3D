@@ -1,11 +1,8 @@
 {
   "program": "shaders/cel.prog",
-  "albedoTexture": "textures/ogre_diffuse.bmp",
-  "emissiveTexture": "textures/ogre_emissive.bmp",
-  "normalTexture": "textures/ogre_normal.bmp",
   "albedo": [
-    1,
-    1,
+    0,
+    0,
     1
   ],
   "specular": [

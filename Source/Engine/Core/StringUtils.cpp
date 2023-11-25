@@ -3,7 +3,7 @@
 
 namespace nc
 {
-	std::string nc::StringUtils::ToUpper(const std::string& str)
+	std::string StringUtils::ToUpper(const std::string& str)
 	{
 		string newString = "";
 		for (int i = 0; i < str.length(); i++) {
@@ -12,7 +12,7 @@ namespace nc
 		return newString;
 	}
 
-	std::string nc::StringUtils::ToLower(const std::string& str)
+	std::string StringUtils::ToLower(const std::string& str)
 	{
 		string newString = "";
 		for (int i = 0; i < str.length(); i++) {
@@ -21,12 +21,12 @@ namespace nc
 		return newString;
 	}
 
-	bool nc::StringUtils::IsEqualIgnoreCase(const std::string& stringOne, const std::string& stringTwo)
+	bool StringUtils::IsEqualIgnoreCase(const std::string& stringOne, const std::string& stringTwo)
 	{
 		return ToLower(stringOne) == ToLower(stringTwo);
 	}
 
-	std::string nc::StringUtils::CreateUnique(const std::string& str)
+	std::string StringUtils::CreateUnique(const std::string& str)
 	{
 		static uint32_t unique = 0;
 

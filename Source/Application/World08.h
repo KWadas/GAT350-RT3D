@@ -6,7 +6,7 @@
 
 namespace nc
 {
-	class World07 : public World
+	class World08 : public World
 	{
 	public:
 		uint32_t INVERT_MASK		= (1 << 0);
@@ -27,6 +27,8 @@ namespace nc
 		float m_speed = 5;
 		float m_blend{ 1 };
 		glm::vec3 tint{ 1, 1, 1 };
+
+		int celLevel = 6;
 
 		uint32_t m_params{ 0 };
 
